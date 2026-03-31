@@ -2,6 +2,9 @@ package com.guillermo.idmtech.webapp.spring.controller;
 
 import com.guillermo.idmtech.webapp.spring.model.Cliente;
 import com.guillermo.idmtech.webapp.spring.service.ClienteService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -17,7 +20,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Cliente>> crear(@RequestBody Cliente cliente) {
+    public Mono<ResponseEntity<Cliente>> crear(@Valid @RequestBody Cliente cliente) {
         return service.crear(cliente)
                 .map(ResponseEntity::ok);
     }
@@ -41,7 +44,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> eliminar(@PathVariable Long id) {
+    public Mono<ResponseEntity<Void>> eliminar(@Valid @PathVariable Long id) {
         return service.eliminar(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));
     }
